@@ -63,6 +63,7 @@ if margin_sec > 35 and margin_sec < 400:
 timestamp = args.movie_path.split('/')[-1].split('.')[0]
 timestamp = datetime.strptime(timestamp, '%Y-%m-%d_%H-%M-%S')
 
+cmds = []
 for game in games:
     mins = int(game[0] // 60)
     secs = int(game[0] % 60)
@@ -80,7 +81,12 @@ for game in games:
                                                                            args.movie_path,
                                                                            duration,
                                                                            output_path)
-    print(cmd)
+    cmds.append(cmd)
+
+with open('do.sh', 'w') as f:
+    for cmd in cmds:
+        f.write('{}\n'.format(cmd))
+
 
 elapsed_time = time.time() - start_time
 print('Elapsed time: {:.1f}min'.format(elapsed_time / 60))
