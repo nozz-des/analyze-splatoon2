@@ -15,6 +15,8 @@ start_time = time.time()
 parser = argparse.ArgumentParser()
 parser.add_argument('movie_path')
 parser.add_argument('output_dir')
+parser.add_argument('--game_duration_thr', type=int, default=50,
+                    help='minimum seconds regard as one game')
 args = parser.parse_args()
 
 os.makedirs(args.output_dir, exist_ok=True)
@@ -53,11 +55,11 @@ bkout_sec = np.where(bkout_frames==1)[0] / fps
 games = []
 for i in range(len(bkout_sec) - 1):
     diff = bkout_sec[i+1] - bkout_sec[i]
-    if diff > 35:
+    if diff > args.game_duration_thr:
         games.append([bkout_sec[i], diff])
 
 margin_sec = len(bkout_frames) / fps - bkout_sec[-1]
-if margin_sec > 35 and margin_sec < 400:
+if margin_sec > args.game_duration_thr and margin_sec < 400:
     games.append([bkout_sec[-1], margin_sec])
         
 timestamp = args.movie_path.split('/')[-1].split('.')[0]
