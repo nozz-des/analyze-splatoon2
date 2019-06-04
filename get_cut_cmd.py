@@ -47,7 +47,6 @@ while video.isOpened():
         was_bkout = False
 
 video.release()
-cv2.destroyAllWindows()
 
 bkout_frames = np.array(bkout_frames)
 bkout_sec = np.where(bkout_frames==1)[0] / fps
