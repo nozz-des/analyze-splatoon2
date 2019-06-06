@@ -48,6 +48,8 @@ while video.isOpened():
 
 video.release()
 
+# get frames after bkout_frames and judge the bunch of frames is a game of not
+
 bkout_frames = np.array(bkout_frames)
 bkout_sec = np.where(bkout_frames==1)[0] / fps
 
