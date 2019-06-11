@@ -94,15 +94,17 @@ timestamp = datetime.strptime(timestamp, '%Y-%m-%d_%H-%M-%S')
 
 cmds = []
 for game in detected_games:
-    mins = int(game[0] // 60)
-    secs = int(game[0] % 60)
+    start_sec = game[1]
+    duration_sec = game[2]
+    mins = int(start_sec // 60)
+    secs = int(start_sec % 60)
     delta = timedelta(minutes=mins, seconds=secs)
     start_timestamp = timestamp + delta
     start_timestamp = start_timestamp.strftime('%Y-%m-%d_%H-%M-%S')
     game.append(start_timestamp)
     
-    ss = round(int(game[1]))
-    duration = round(int(game[2]))
+    ss = round(int(start_sec))
+    duration = round(int(duration_sec))
 
     output_path = os.path.join(args.output_dir, start_timestamp) + '.mp4'
     
